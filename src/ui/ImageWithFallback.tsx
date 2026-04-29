@@ -1,9 +1,3 @@
-/*
-  DAY 2 - MORNING (09:00-12:00)
-  PHASE 4: UI components - Image with fallback
-  Developer 1 uploads this file
-  Image component with fallback handling - primary → fallback → placeholder
-*/
 import type { ComponentPropsWithoutRef } from 'react';
 import { useEffect, useState } from 'react';
 
