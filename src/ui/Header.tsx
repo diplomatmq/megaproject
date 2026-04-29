@@ -1,9 +1,3 @@
-/*
-  DAY 2 - MORNING (09:00-12:00)
-  PHASE 4: UI components - Header
-  Developer 2 uploads this file
-  Navigation header with logo, search, cart icon, menu
-*/
 import { Menu, Search, ShoppingCart } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';

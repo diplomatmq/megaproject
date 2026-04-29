@@ -1,9 +1,3 @@
-/*
-  DAY 2 - MORNING (09:00-12:00)
-  PHASE 4: UI components - Rating stars display
-  Developer 1 uploads this file
-  Star rating component with 5-star display and half-star support
-*/
 import { Star, StarHalf } from 'lucide-react';
 
 type RatingStarsProps = {
