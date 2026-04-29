@@ -13,4 +13,5 @@ export type ProductItem = {
   description: string;
   specs: ProductCharacteristic[];
   images: string[];
+  onSale?: boolean;
 };
