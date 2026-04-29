@@ -1,4 +1,9 @@
-
+/*
+  DAY 2 - EVENING (19:00-22:00)
+  PHASE 6: Pages - Shopping cart
+  Developer 2 uploads this file
+  Show cart items, quantity adjustment, promo code, checkout
+*/
 import { ArrowRight, MapPin, Minus, Plus, Trash2, Truck } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
