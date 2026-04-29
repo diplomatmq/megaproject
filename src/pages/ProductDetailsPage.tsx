@@ -1,9 +1,3 @@
-/*
-  DAY 2 - EVENING (19:00-22:00)
-  PHASE 6: Pages - Product details
-  Developer 1 uploads this file
-  Show detailed product info, images carousel, related products
-*/
 import * as Accordion from '@radix-ui/react-accordion';
 import {
   BadgeCheck,

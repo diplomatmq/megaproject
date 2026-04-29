@@ -1,9 +1,3 @@
-/*
-  DAY 2 - AFTERNOON (14:00-17:00)
-  PHASE 5: Layout - Catalog page
-  Developer 2 uploads this file
-  Products list with filters (price, rating) and sorting
-*/
 import { ShoppingCart, SlidersHorizontal } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
