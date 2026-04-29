@@ -1,8 +1,8 @@
 import { Navigate, createBrowserRouter } from 'react-router-dom';
-import { MainLayout } from '../shared/ui/layout/MainLayout';
-import { CartPage } from '../pages/cart/CartPage';
-import { ProductDetailsPage } from '../pages/product-details/ProductDetailsPage';
-import { CatalogPage } from '../pages/catalog/CatalogPage';
+import { MainLayout } from '../ui/MainLayout';
+import { CartPage } from '../pages/CartPage';
+import { ProductDetailsPage } from '../pages/ProductDetailsPage';
+import { CatalogPage } from '../pages/CatalogPage';
 
 export const appRouter = createBrowserRouter([
   {
@@ -15,8 +15,4 @@ export const appRouter = createBrowserRouter([
       { path: '*', element: <Navigate to="/" replace /> },
     ],
   },
-], {
-  future: {
-    v7_startTransition: true,
-  },
-});
+]);
