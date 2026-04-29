@@ -1,9 +1,4 @@
-/*
-  DAY 1 - EVENING (19:00-22:00)
-  PHASE 3: Data models and types
-  Developer 2 uploads this file
-  Product catalog - mock data with building materials
-*/
+
 import { type ProductItem } from './types';
 
 export const productCatalog: ProductItem[] = [
