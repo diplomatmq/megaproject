@@ -29,6 +29,7 @@ export const productCatalog: ProductItem[] = [
       'https://images.unsplash.com/photo-1504307651254-35680f356dfd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
       'https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
     ],
+    onSale: true,
   },
   {
     id: '2',
@@ -52,6 +53,7 @@ export const productCatalog: ProductItem[] = [
       'https://images.unsplash.com/photo-1465804575741-338df8554e02?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
       'https://images.unsplash.com/photo-1504307651254-35680f356dfd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
     ],
+    onSale: false,
   },
   {
     id: '3',
@@ -75,6 +77,7 @@ export const productCatalog: ProductItem[] = [
       'https://images.unsplash.com/photo-1472396961693-142e6e269027?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
       'https://images.unsplash.com/photo-1504307651254-35680f356dfd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
     ],
+    onSale: true,
   },
   {
     id: '4',
@@ -98,6 +101,7 @@ export const productCatalog: ProductItem[] = [
       'https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
       'https://images.unsplash.com/photo-1504307651254-35680f356dfd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
     ],
+    onSale: false,
   },
   {
     id: '5',
@@ -121,6 +125,7 @@ export const productCatalog: ProductItem[] = [
       'https://images.unsplash.com/photo-1532634726-8b9fb99825ad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
       'https://images.unsplash.com/photo-1504307651254-35680f356dfd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
     ],
+    onSale: true,
   },
   {
     id: '6',
@@ -144,5 +149,6 @@ export const productCatalog: ProductItem[] = [
       'https://images.unsplash.com/photo-1465804575741-338df8554e02?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
       'https://images.unsplash.com/photo-1504307651254-35680f356dfd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
     ],
+    onSale: false,
   },
 ];

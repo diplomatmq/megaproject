@@ -11,6 +11,7 @@ import { RatingStars } from '../ui/RatingStars';
 type Filters = {
   minRating: number | null;
   priceRange: [number, number];
+  onlyOnSale: boolean;
 };
 
 type SortType = 'name-asc' | 'name-desc' | 'price-asc' | 'price-desc';
@@ -23,23 +24,27 @@ export function CatalogPage() {
   const [filters, setFilters] = useState<Filters>({
     minRating: null,
     priceRange: [0, maxPrice],
+    onlyOnSale: false,
   });
   const [showFilters, setShowFilters] = useState(false);
 
   const visibleProducts = useMemo(() => {
-    const priceFiltered = productCatalog.filter(
+    let filtered = productCatalog.filter(
       (product) =>
         product.price >= filters.priceRange[0] &&
         product.price <= filters.priceRange[1],
     );
 
-    const { minRating } = filters;
-    const ratingFiltered =
-      minRating === null
-        ? priceFiltered
-        : priceFiltered.filter((product) => product.rating >= minRating);
+    if (filters.onlyOnSale) {
+      filtered = filtered.filter((product) => product.onSale);
+    }
 
-    return [...ratingFiltered].sort((prodA, prodB) => {
+    const { minRating } = filters;
+    if (minRating !== null) {
+      filtered = filtered.filter((product) => product.rating >= minRating);
+    }
+
+    return [...filtered].sort((prodA, prodB) => {
       if (sort === 'name-asc') {
         return prodA.name.localeCompare(prodB.name);
       }
@@ -54,7 +59,7 @@ export function CatalogPage() {
   }, [filters, sort]);
 
   const resetFilters = () => {
-    setFilters({ minRating: null, priceRange: [0, maxPrice] });
+    setFilters({ minRating: null, priceRange: [0, maxPrice], onlyOnSale: false });
   };
 
   const updateMinPrice = (value: number) => {
@@ -177,6 +182,27 @@ export function CatalogPage() {
               </div>
             </div>
 
+            <div className="flex-1">
+              <h3 className="mb-3 font-semibold">Deals</h3>
+              <div className="flex items-center gap-2">
+                <input
+                  id="on-sale-filter"
+                  type="checkbox"
+                  checked={filters.onlyOnSale}
+                  onChange={(event) =>
+                    setFilters((prevFilters) => ({
+                      ...prevFilters,
+                      onlyOnSale: event.target.checked,
+                    }))
+                  }
+                  className="h-4 w-4"
+                />
+                <label htmlFor="on-sale-filter" className="cursor-pointer">
+                  Show Only on Sale
+                </label>
+              </div>
+            </div>
+
             <div className="flex items-end">
               <button
                 onClick={resetFilters}
@@ -196,13 +222,18 @@ export function CatalogPage() {
             className="group overflow-hidden rounded-lg border border-gray-200 bg-white transition hover:shadow-lg"
           >
             <Link to={`/product/${product.id}`}>
-              <div className="aspect-square overflow-hidden bg-gray-100">
+              <div className="relative h-64 w-full overflow-hidden">
                 <ImageWithFallback
                   src={product.image}
                   fallbackSrc={product.images[1] ?? product.images[0]}
                   alt={product.name}
                   className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
                 />
+                {product.onSale && (
+                  <div className="absolute top-4 left-4 rounded-full bg-red-600 px-3 py-1 text-xs font-bold text-white shadow-lg">
+                    SALE
+                  </div>
+                )}
               </div>
             </Link>
 
