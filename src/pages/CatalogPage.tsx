@@ -1,3 +1,4 @@
+import * as Slider from '@radix-ui/react-slider';
 import { ShoppingCart, SlidersHorizontal } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -10,24 +11,29 @@ import { RatingStars } from '../ui/RatingStars';
 
 type Filters = {
   minRating: number | null;
-  maxPrice: number;
+  priceRange: [number, number];
 };
 
 type SortType = 'name-asc' | 'name-desc' | 'price-asc' | 'price-desc';
 
 export function CatalogPage() {
   const { addProduct } = useCart();
+  const catalogMinPrice = 0;
   const catalogMaxPrice = Math.max(...productCatalog.map((product) => product.price));
+  const priceStep = 10;
 
   const [sort, setSort] = useState<SortType>('name-asc');
   const [filters, setFilters] = useState<Filters>({
     minRating: null,
-    maxPrice: catalogMaxPrice,
+    priceRange: [catalogMinPrice, catalogMaxPrice],
   });
   const [showFilters, setShowFilters] = useState(false);
 
   const visibleProducts = useMemo(() => {
-    const priceFiltered = productCatalog.filter((product) => product.price <= filters.maxPrice);
+    const priceFiltered = productCatalog.filter(
+      (product) =>
+        product.price >= filters.priceRange[0] && product.price <= filters.priceRange[1],
+    );
 
     const { minRating } = filters;
     const ratingFiltered =
@@ -50,15 +56,33 @@ export function CatalogPage() {
   }, [filters, sort]);
 
   const resetFilters = () => {
-    setFilters({ minRating: null, maxPrice: catalogMaxPrice });
+    setFilters({ minRating: null, priceRange: [catalogMinPrice, catalogMaxPrice] });
   };
 
-  const updateMaxPrice = (value: number) => {
+  const updatePriceRange = (values: number[]) => {
+    const snapToPriceStep = (value: number, allowCatalogMax = false) => {
+      if (allowCatalogMax && value >= catalogMaxPrice - priceStep / 2) {
+        return catalogMaxPrice;
+      }
+
+      const steppedValue = Math.round(value / priceStep) * priceStep;
+      return Math.max(catalogMinPrice, Math.min(steppedValue, catalogMaxPrice));
+    };
+
+    const nextMin = snapToPriceStep(values[0] ?? catalogMinPrice);
+    const nextMax = Math.max(
+      nextMin,
+      snapToPriceStep(values[1] ?? catalogMaxPrice, true),
+    );
+
     setFilters((prevFilters) => ({
       ...prevFilters,
-      maxPrice: value,
+      priceRange: [nextMin, nextMax],
     }));
   };
+
+  const formatPrice = (value: number) =>
+    `$${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
 
   const handleAddProduct = (product: ProductItem) => {
     addProduct(product);
@@ -135,19 +159,31 @@ export function CatalogPage() {
             <div className="flex-1">
               <h3 className="mb-3 font-semibold">Price Range</h3>
               <div className="mb-4">
-                <input
-                  type="range"
-                  min={0}
+                <Slider.Root
+                  min={catalogMinPrice}
                   max={catalogMaxPrice}
-                  step={0.01}
-                  value={filters.maxPrice}
-                  onChange={(event) => updateMaxPrice(Number(event.target.value))}
-                  className="w-full"
-                />
+                  step={priceStep}
+                  minStepsBetweenThumbs={0}
+                  value={filters.priceRange}
+                  onValueChange={updatePriceRange}
+                  className="relative flex h-6 w-full touch-none select-none items-center"
+                >
+                  <Slider.Track className="relative h-4 grow">
+                    <Slider.Range className="absolute h-full rounded-full bg-[#020A2F]" />
+                  </Slider.Track>
+                  <Slider.Thumb
+                    aria-label="Minimum price"
+                    className="block h-4 w-4 rounded-full border border-[#020A2F] bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+                  />
+                  <Slider.Thumb
+                    aria-label="Maximum price"
+                    className="block h-4 w-4 rounded-full border border-[#020A2F] bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+                  />
+                </Slider.Root>
               </div>
               <div className="flex justify-between text-sm text-gray-600">
-                <span>$0.00</span>
-                <span>${filters.maxPrice.toFixed(2)}</span>
+                <span>{formatPrice(filters.priceRange[0])}</span>
+                <span>{formatPrice(filters.priceRange[1])}</span>
               </div>
             </div>
 
