@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-=======
-/*
-  DAY 1 - EVENING (19:00-22:00)
-  PHASE 3: Data models and context
-  Developer 2 uploads this file
-  Store cart state, manage products (add/remove/quantity)
-*/
->>>>>>> a4e7f2b (Flex fixes and header menu)
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import type { PropsWithChildren } from 'react';
 import type { ProductItem } from '../entities/types';
