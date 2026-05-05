@@ -10,28 +10,24 @@ import { RatingStars } from '../ui/RatingStars';
 
 type Filters = {
   minRating: number | null;
-  priceRange: [number, number];
+  maxPrice: number;
 };
 
 type SortType = 'name-asc' | 'name-desc' | 'price-asc' | 'price-desc';
 
 export function CatalogPage() {
   const { addProduct } = useCart();
-  const maxPrice = Math.max(...productCatalog.map((product) => product.price));
+  const catalogMaxPrice = Math.max(...productCatalog.map((product) => product.price));
 
   const [sort, setSort] = useState<SortType>('name-asc');
   const [filters, setFilters] = useState<Filters>({
     minRating: null,
-    priceRange: [0, maxPrice],
+    maxPrice: catalogMaxPrice,
   });
   const [showFilters, setShowFilters] = useState(false);
 
   const visibleProducts = useMemo(() => {
-    const priceFiltered = productCatalog.filter(
-      (product) =>
-        product.price >= filters.priceRange[0] &&
-        product.price <= filters.priceRange[1],
-    );
+    const priceFiltered = productCatalog.filter((product) => product.price <= filters.maxPrice);
 
     const { minRating } = filters;
     const ratingFiltered =
@@ -54,27 +50,14 @@ export function CatalogPage() {
   }, [filters, sort]);
 
   const resetFilters = () => {
-    setFilters({ minRating: null, priceRange: [0, maxPrice] });
-  };
-
-  const updateMinPrice = (value: number) => {
-    setFilters((prevFilters) => {
-      const nextMin = Math.min(value, prevFilters.priceRange[1]);
-      return {
-        ...prevFilters,
-        priceRange: [nextMin, prevFilters.priceRange[1]],
-      };
-    });
+    setFilters({ minRating: null, maxPrice: catalogMaxPrice });
   };
 
   const updateMaxPrice = (value: number) => {
-    setFilters((prevFilters) => {
-      const nextMax = Math.max(value, prevFilters.priceRange[0]);
-      return {
-        ...prevFilters,
-        priceRange: [prevFilters.priceRange[0], nextMax],
-      };
-    });
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      maxPrice: value,
+    }));
   };
 
   const handleAddProduct = (product: ProductItem) => {
@@ -155,25 +138,16 @@ export function CatalogPage() {
                 <input
                   type="range"
                   min={0}
-                  max={maxPrice}
-                  step={10}
-                  value={filters.priceRange[0]}
-                  onChange={(event) => updateMinPrice(Number(event.target.value))}
-                  className="w-full"
-                />
-                <input
-                  type="range"
-                  min={0}
-                  max={maxPrice}
-                  step={10}
-                  value={filters.priceRange[1]}
+                  max={catalogMaxPrice}
+                  step={0.01}
+                  value={filters.maxPrice}
                   onChange={(event) => updateMaxPrice(Number(event.target.value))}
                   className="w-full"
                 />
               </div>
               <div className="flex justify-between text-sm text-gray-600">
-                <span>${filters.priceRange[0]}</span>
-                <span>${filters.priceRange[1]}</span>
+                <span>$0.00</span>
+                <span>${filters.maxPrice.toFixed(2)}</span>
               </div>
             </div>
 

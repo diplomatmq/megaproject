@@ -61,7 +61,7 @@ export function CartPage() {
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <div className="rounded-lg border border-gray-200 bg-white">
-            <div className="hidden grid-cols-12 gap-4 border-b border-gray-200 p-6 text-sm font-semibold text-gray-600 md:grid">
+            <div className="hidden grid-cols-12 gap-4 border-b border-gray-200 p-6 text-sm font-semibold text-gray-600 lg:grid">
               <div className="col-span-6">Product</div>
               <div className="col-span-2 text-center">Price</div>
               <div className="col-span-2 text-center">Quantity</div>
@@ -71,8 +71,8 @@ export function CartPage() {
             <div className="divide-y divide-gray-200">
               {cartLines.map((line) => (
                 <div key={line.product.id} className="p-4 md:p-6">
-                  <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-12">
-                    <div className="flex gap-4 md:col-span-6">
+                  <div className="grid grid-cols-1 items-center gap-4 lg:grid-cols-12">
+                    <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:gap-4 lg:col-span-6">
                       <Link to={`/product/${line.product.id}`} className="shrink-0">
                         <ImageWithFallback
                           src={line.product.image}
@@ -81,17 +81,17 @@ export function CartPage() {
                           className="h-20 w-20 rounded-lg object-cover md:h-24 md:w-24"
                         />
                       </Link>
-                      <div className="flex-1">
+                      <div className="min-w-0 flex-1">
                         <Link
                           to={`/product/${line.product.id}`}
-                          className="font-semibold text-gray-900 transition hover:text-orange-600"
+                          className="block font-semibold leading-snug text-gray-900 transition hover:text-orange-600"
                         >
                           {line.product.name}
                         </Link>
                         <p className="mt-1 text-sm text-gray-600">{line.product.category}</p>
                         <button
                           onClick={() => removeProduct(line.product.id)}
-                          className="mt-2 flex items-center gap-1 text-sm text-red-600 hover:text-red-700 md:hidden"
+                          className="mt-2 flex items-center gap-1 text-sm text-red-600 hover:text-red-700 lg:hidden"
                         >
                           <Trash2 className="h-4 w-4" />
                           Remove
@@ -99,12 +99,12 @@ export function CartPage() {
                       </div>
                     </div>
 
-                    <div className="md:col-span-2 md:text-center">
-                      <span className="text-sm text-gray-600 md:hidden">Price: </span>
+                    <div className="lg:col-span-2 lg:text-center">
+                      <span className="text-sm text-gray-600 lg:hidden">Price: </span>
                       <span className="font-semibold">${line.product.price.toFixed(2)}</span>
                     </div>
 
-                    <div className="flex justify-start md:col-span-2 md:justify-center">
+                    <div className="flex justify-start lg:col-span-2 lg:justify-center">
                       <div className="flex items-center gap-2 rounded-lg border border-gray-300">
                         <button
                           onClick={() => changeQuantity(line.product.id, line.quantity - 1)}
@@ -122,14 +122,14 @@ export function CartPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between md:col-span-2 md:justify-end">
-                      <span className="text-sm text-gray-600 md:hidden">Total: </span>
-                      <span className="text-lg font-bold">
+                    <div className="flex items-center justify-between gap-3 lg:col-span-2 lg:justify-end">
+                      <span className="text-sm text-gray-600 lg:hidden">Total: </span>
+                      <span className="text-lg font-bold whitespace-nowrap">
                         ${(line.product.price * line.quantity).toFixed(2)}
                       </span>
                       <button
                         onClick={() => removeProduct(line.product.id)}
-                        className="ml-4 hidden text-red-600 transition hover:text-red-700 md:block"
+                        className="ml-4 hidden text-red-600 transition hover:text-red-700 lg:block"
                       >
                         <Trash2 className="h-5 w-5" />
                       </button>
@@ -142,7 +142,7 @@ export function CartPage() {
 
           <div className="mt-6 rounded-lg border border-gray-200 bg-white p-6">
             <h3 className="mb-3 font-semibold">Have a promo code?</h3>
-            <div className="flex gap-2">
+            <div className="flex flex-col gap-2 sm:flex-row">
               <input
                 type="text"
                 placeholder="Enter promo code"
@@ -151,11 +151,11 @@ export function CartPage() {
                   setPromoInput(event.target.value);
                   setError('');
                 }}
-                className="flex-1 rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                className="min-w-0 flex-1 rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-orange-500 focus:outline-none"
               />
               <button
                 onClick={applyPromo}
-                className="rounded-lg bg-orange-600 px-6 py-2 font-semibold text-white transition hover:bg-orange-700"
+                className="w-full shrink-0 rounded-lg bg-orange-600 px-6 py-2 font-semibold text-white transition hover:bg-orange-700 sm:w-auto"
               >
                 Apply
               </button>
